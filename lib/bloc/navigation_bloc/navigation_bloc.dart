@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import '../pages/zeitplanung.dart';
-import '../pages/zeiterfassung.dart';
-import '../pages/home.dart';
-import '../pages/info.dart';
+import 'package:studybuddy/pages/home.dart';
+import 'package:studybuddy/pages/zeitplanung.dart';
+import 'package:studybuddy/pages/zeiterfassung.dart';
+import 'package:studybuddy/pages/info.dart';
 
 enum NavigationEvents {
   HomePageClicked,
