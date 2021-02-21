@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'sidebar/sidebar_layout.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:studybuddy/bloc/navigation_bloc/navigation_bloc.dart';
+import 'sidebar/sidebar.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +14,28 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           primaryColor: Colors.white
       ),
-      home: SideBarLayout(),
+      home: AppLayout(),
+    );
+  }
+}
+
+class AppLayout extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocProvider<NavigationBloc>(
+        create: (context) => NavigationBloc(),
+        child: Stack(
+          children: <Widget>[
+            BlocBuilder<NavigationBloc, NavigationStates>(
+              builder: (context, navigationState) {
+                return navigationState as Widget;
+              },
+            ),
+            SideBar(),// has to come after the BlocBuilder bcause otherwise the blocBuilders Text overlaps with the open Sidebar. Don't why, just tested it.
+          ],
+        ),
+      ),
     );
   }
 }
