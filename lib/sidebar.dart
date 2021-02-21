@@ -17,8 +17,9 @@ class MenuItem extends StatefulWidget {
   final Color iconColor;
   final String title;
   final Function onTap;
+  String currentPage;
 
-  const MenuItem({Key key, this.icon, this.title, this.onTap, this.iconColor}) : super(key: key);
+  MenuItem({Key key, this.icon, this.title, this.onTap, this.iconColor, this.currentPage}) : super(key: key);
 
   @override
   _MenuItemState createState() => _MenuItemState();
@@ -26,6 +27,7 @@ class MenuItem extends StatefulWidget {
 class _MenuItemState extends State<MenuItem> {
   @override
   Widget build(BuildContext context) {
+    print('${widget.title} : ${widget.currentPage}\n');
     return GestureDetector(
       onTap: widget.onTap,
       child: Padding(
@@ -127,6 +129,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 400);
   Map<String, MenuItem> menuItems;
+  String currentPage='Home';// initial Page
 
   _SideBarState(){
     menuItems={
@@ -135,52 +138,61 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
         title: "Home",
         //color: iconColor,
         onTap: () {
-          onIconPressed();
+          onIconPressed("Home");
           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClicked);
+          setState((){
+            this.currentPage=currentPage;
+          });
         },
+        currentPage: currentPage,
       ),//Home
       'Zeitplanung': MenuItem(
         icon: Icons.calendar_today_outlined,
         title: "Zeitplanung",
         //color: iconColor,
         onTap: () {
-          onIconPressed();
+          onIconPressed("Zeitplanung");
           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ZeitplanungClicked);
         },
+        currentPage: currentPage,
       ),
       'Zeiterfassung': MenuItem(
         icon: Icons.access_alarm_rounded,
         title: "Zeiterfassung",
         //color: iconColor,
         onTap: () {
-          onIconPressed();
+          onIconPressed('Zeiterfassung');
           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ZeiterfassungClicked);
         },
+        currentPage: currentPage,
       ),
       'Info': MenuItem(
         icon: Icons.info,
         title: "Info",
         //color: iconColor,
         onTap: () {
-          onIconPressed();
+          onIconPressed('Info');
           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.InfoClicked);
         },
+        currentPage: currentPage,
       ),
       'Settings': MenuItem(
         icon: Icons.settings,
         title: "Settings",
         onTap: () {
-          onIconPressed();
+          onIconPressed('Settings');
           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SettingsClicked);
         },
+        currentPage: currentPage,
       ),// Settings
       'Log':MenuItem(
         icon: Icons.exit_to_app,
         title: "Logout",
         onTap: () {
-          onIconPressed();
+          onIconPressed( 'Log');
           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.LogClicked);
         },
+        currentPage: currentPage,
       ),//needs a lot of work
     };
   }
@@ -201,7 +213,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
     super.dispose();
   }
 
-  void onIconPressed() {
+  void onIconPressed(String page) {
     final animationStatus = _animationController.status;
     final isAnimationCompleted = animationStatus == AnimationStatus.completed;
 
@@ -212,6 +224,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
       isSidebarOpenedSink.add(true);
       _animationController.forward();
     }
+    currentPage=page;
   }
 
   @override
@@ -305,7 +318,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                   alignment: Alignment(0, -0.9),
                   child: GestureDetector(
                     onTap: () {
-                      onIconPressed();
+                      onIconPressed(currentPage);
                     },
                     child: ClipPath(
                       clipper: CustomMenuClipper(),
