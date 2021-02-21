@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:studybuddy/bloc/navigation_bloc/navigation_bloc.dart';
 
+//Helper classes
 class MenuItem extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
@@ -38,12 +39,36 @@ class MenuItem extends StatelessWidget {
     );
   }
 }
+class CustomMenuClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Paint paint = Paint();
+    paint.color = Colors.black;
 
+    final width = size.width;
+    final height = size.height;
+
+    Path path = Path();
+    path.moveTo(0, 0);
+    path.quadraticBezierTo(0, 8, 10, 16);
+    path.quadraticBezierTo(width - 1, height / 2 - 20, width, height / 2);
+    path.quadraticBezierTo(width + 1, height / 2 + 20, 10, height - 16);
+    path.quadraticBezierTo(0, height - 8, 0, height);
+    path.close();
+    return path;
+  }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {//this is here because flutter wants it to be here...
+    return true;
+  }
+
+}
+
+//Displaying Classes
 class SideBar extends StatefulWidget {
   @override
   _SideBarState createState() => _SideBarState();
 }
-
 class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<SideBar> {
   AnimationController _animationController;
   StreamController<bool> isSidebarOpenedStreamController;
@@ -59,7 +84,6 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
     isSidebarOpenedStream = isSidebarOpenedStreamController.stream;
     isSidebarOpenedSink = isSidebarOpenedStreamController.sink;
   }
-
   @override
   void dispose() {
     _animationController.dispose();
@@ -242,27 +266,3 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   }
 }
 
-class CustomMenuClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Paint paint = Paint();
-    paint.color = Colors.black;
-
-    final width = size.width;
-    final height = size.height;
-
-    Path path = Path();
-    path.moveTo(0, 0);
-    path.quadraticBezierTo(0, 8, 10, 16);
-    path.quadraticBezierTo(width - 1, height / 2 - 20, width, height / 2);
-    path.quadraticBezierTo(width + 1, height / 2 + 20, 10, height - 16);
-    path.quadraticBezierTo(0, height - 8, 0, height);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
-  }
-}
