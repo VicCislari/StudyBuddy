@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:bloc/bloc.dart';
+//Pages
 import 'pages/home.dart';
 import 'pages/zeitplanung.dart';
 import 'pages/zeiterfassung.dart';
 import 'pages/info.dart';
+import 'pages/settings.dart';
+import 'pages/log.dart';
 
 //Helper classes
-class MenuItem extends StatelessWidget {
+class MenuItem extends StatefulWidget {
   final IconData icon;
   final Color iconColor;
   final String title;
@@ -18,15 +21,19 @@ class MenuItem extends StatelessWidget {
   const MenuItem({Key key, this.icon, this.title, this.onTap, this.iconColor}) : super(key: key);
 
   @override
+  _MenuItemState createState() => _MenuItemState();
+}
+class _MenuItemState extends State<MenuItem> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           children: <Widget>[
             Icon(
-              icon,
+              widget.icon,
               color: Colors.black,
               size: 30,
             ),
@@ -34,7 +41,7 @@ class MenuItem extends StatelessWidget {
               width: 20,
             ),
             Text(
-              title,
+              widget.title,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, color: Colors.black),
             )
           ],
@@ -43,6 +50,7 @@ class MenuItem extends StatelessWidget {
     );
   }
 }
+
 class CustomMenuClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -74,6 +82,8 @@ enum NavigationEvents {
   ZeitplanungClicked,
   ZeiterfassungClicked,
   InfoClicked,
+  SettingsClicked,
+  LogClicked,
 }
 abstract class NavigationStates {}
 class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
@@ -95,6 +105,12 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
       case NavigationEvents.InfoClicked:
         yield Info();
         break;
+      case NavigationEvents.SettingsClicked:
+        yield Settings();
+        break;
+      case NavigationEvents.LogClicked:
+        yield Log();
+        break;
     }
   }
 }
@@ -110,6 +126,64 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   Stream<bool> isSidebarOpenedStream;
   StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 400);
+  Map<String, MenuItem> menuItems;
+
+  _SideBarState(){
+    menuItems={
+      'Home': MenuItem(
+        icon: Icons.home,
+        title: "Home",
+        //color: iconColor,
+        onTap: () {
+          onIconPressed();
+          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClicked);
+        },
+      ),//Home
+      'Zeitplanung': MenuItem(
+        icon: Icons.home,
+        title: "Zeitplanung",
+        //color: iconColor,
+        onTap: () {
+          onIconPressed();
+          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ZeitplanungClicked);
+        },
+      ),
+      'Zeiterfassung': MenuItem(
+        icon: Icons.home,
+        title: "Zeiterfassung",
+        //color: iconColor,
+        onTap: () {
+          onIconPressed();
+          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ZeiterfassungClicked);
+        },
+      ),
+      'Info': MenuItem(
+        icon: Icons.home,
+        title: "Info",
+        //color: iconColor,
+        onTap: () {
+          onIconPressed();
+          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.InfoClicked);
+        },
+      ),
+      'Settings': MenuItem(
+        icon: Icons.settings,
+        title: "Settings",
+        onTap: () {
+          onIconPressed();
+          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SettingsClicked);
+        },
+      ),// Settings
+      'Log':MenuItem(
+        icon: Icons.exit_to_app,
+        title: "Logout",
+        onTap: () {
+          onIconPressed();
+          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.LogClicked);
+        },
+      ),
+    };
+  }
 
   @override
   void initState() {
@@ -142,11 +216,12 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
 
   @override
   Widget build(BuildContext context) {
+
     final screenWidth = MediaQuery.of(context).size.width;
 
-    Color fontColor= Colors.black;
+    //Color fontColor= Colors.black;
     Color bgColor= Colors.red[900];
-    Color iconColor = Colors.grey[500];
+    //Color iconColor = Colors.grey[500];
 
     return StreamBuilder<bool>(
       initialData: false,
@@ -167,7 +242,9 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                     color: bgColor,
                     child: Column(
                       children: <Widget>[
-                        /*SizedBox(
+                        /*
+                        !!!!!!!!!!!!!!!!!!!!!!!!keep this for later!!!!!!!!!!!!!!!!!!!!!!!!
+                        SizedBox(
                           height: 100,
                         ),
                         ListTile(
@@ -200,56 +277,10 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         //can't I just automate these things
 
                          */
-                        MenuItem(
-                          icon: Icons.home,
-                          title: "Home",
-                          //color: iconColor,
-                          onTap: () {
-                            onIconPressed();
-                            BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClicked);
-                          },
-                        ),//Home
-                        MenuItem(
-                          icon: Icons.person,
-                          title: "Zeitplanung",
-                          onTap: () {
-                            onIconPressed();
-                            BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ZeitplanungClicked);
-                          },
-                        ),//Zeitplanung
-                        MenuItem(
-                          icon: Icons.person,
-                          title: "Zeiterfassung",
-                          onTap: () {
-                            onIconPressed();
-                            BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ZeiterfassungClicked);
-                          },
-                        ),//Zeiterfassung
-                        MenuItem(
-                          icon: Icons.shopping_basket,
-                          title: 'Info',
-                          onTap: () {
-                            onIconPressed();
-                            BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.InfoClicked);
-                          },
-                        ),//Info
-                       /*
-                        Card(
-                          color:bgColor,
-                          elevation: 0.0,
-                          child: ListTile(
-                            onTap: (){
-                              onIconPressed();
-                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.InfoClicked);
-                            },
-                            title:Text(
-                                'Info',
-                                TextStyle(fontweight:FontWeight.bold),
-                            ),
-                            leading: Icon(Icons.shopping_basket),
-                            ),
-                          ),
-                          */
+                        menuItems['Home'],
+                        menuItems['Zeitplanung'],
+                        menuItems['Zeiterfassung'],
+                        menuItems['Info'],
                         Divider(
                           height: 200,
                           thickness: 0.5,
@@ -257,14 +288,16 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                           indent: 32,
                           endIndent: 32,
                         ),
+                        menuItems['Settings'],
+                        menuItems['Log'],
                         MenuItem(
                           icon: Icons.settings,
                           title: "Settings",
-                        ),//Settings
+                        ),// Settings
                         MenuItem(
                           icon: Icons.exit_to_app,
                           title: "Logout",
-                        ),//Login-Logout
+                        ),// Login-Logout
                       ],
                     ),
                   ),
