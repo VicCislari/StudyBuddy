@@ -13,11 +13,26 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           primaryColor: Colors.white
       ),
-      home: AppLayout(),
+      home: Scaffold(//AppLayout
+        body: BlocProvider<NavigationBloc>(
+          create: (context) => NavigationBloc(),
+          child: Stack(
+            children: <Widget>[
+              BlocBuilder<NavigationBloc, NavigationStates>(
+                builder: (context, navigationState) {
+                  return navigationState as Widget;
+                },
+              ),
+              SideBar(),// has to come after the BlocBuilder bcause otherwise the blocBuilders Text overlaps with the open Sidebar. Don't why, just tested it.
+            ],
+          ),
+        ),
+      ),//AppLayout
     );
   }
 }
 
+/*
 class AppLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -38,3 +53,5 @@ class AppLayout extends StatelessWidget {
     );
   }
 }
+
+ */
