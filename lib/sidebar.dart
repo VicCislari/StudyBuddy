@@ -140,7 +140,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
         },
       ),//Home
       'Zeitplanung': MenuItem(
-        icon: Icons.home,
+        icon: Icons.calendar_today_outlined,
         title: "Zeitplanung",
         //color: iconColor,
         onTap: () {
@@ -149,7 +149,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
         },
       ),
       'Zeiterfassung': MenuItem(
-        icon: Icons.home,
+        icon: Icons.access_alarm_rounded,
         title: "Zeiterfassung",
         //color: iconColor,
         onTap: () {
@@ -158,7 +158,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
         },
       ),
       'Info': MenuItem(
-        icon: Icons.home,
+        icon: Icons.info,
         title: "Info",
         //color: iconColor,
         onTap: () {
@@ -181,7 +181,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
           onIconPressed();
           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.LogClicked);
         },
-      ),
+      ),//needs a lot of work
     };
   }
 
@@ -277,27 +277,26 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         //can't I just automate these things
 
                          */
+                        Divider(
+                          height: 50,
+                          thickness: 0.5,
+                          color: Colors.white.withOpacity(0.3),
+                          indent: 32,
+                          endIndent: 32,
+                        ),
                         menuItems['Home'],
                         menuItems['Zeitplanung'],
                         menuItems['Zeiterfassung'],
                         menuItems['Info'],
                         Divider(
-                          height: 200,
+                          height: 100,
                           thickness: 0.5,
                           color: Colors.white.withOpacity(0.3),
                           indent: 32,
                           endIndent: 32,
                         ),
                         menuItems['Settings'],
-                        menuItems['Log'],
-                        MenuItem(
-                          icon: Icons.settings,
-                          title: "Settings",
-                        ),// Settings
-                        MenuItem(
-                          icon: Icons.exit_to_app,
-                          title: "Logout",
-                        ),// Login-Logout
+                        menuItems['Log'],// Login-Logout
                       ],
                     ),
                   ),
