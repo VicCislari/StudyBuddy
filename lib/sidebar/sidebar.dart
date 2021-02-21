@@ -3,12 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:studybuddy/bloc/navigation_bloc/navigation_bloc.dart';
-import '../sidebar/menu_item.dart';
 
-import 'package:studybuddy/pages/home.dart';
-import 'package:studybuddy/pages/zeitplanung.dart';
-import 'package:studybuddy/pages/zeiterfassung.dart';
-import 'package:studybuddy/pages/info.dart';
+class MenuItem extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final Function onTap;
+
+  const MenuItem({Key key, this.icon, this.title, this.onTap, this.iconColor}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: <Widget>[
+            Icon(
+              icon,
+              color: Colors.black,
+              size: 30,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, color: Colors.black),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class SideBar extends StatefulWidget {
   @override
@@ -20,7 +49,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   StreamController<bool> isSidebarOpenedStreamController;
   Stream<bool> isSidebarOpenedStream;
   StreamSink<bool> isSidebarOpenedSink;
-  final _animationDuration = const Duration(milliseconds: 500);
+  final _animationDuration = const Duration(milliseconds: 400);
 
   @override
   void initState() {
