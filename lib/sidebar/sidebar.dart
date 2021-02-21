@@ -2,7 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:studybuddy/bloc/navigation_bloc/navigation_bloc.dart';
+import 'package:bloc/bloc.dart';
+import '../pages/home.dart';
+import '../pages/zeitplanung.dart';
+import '../pages/zeiterfassung.dart';
+import '../pages/info.dart';
 
 //Helper classes
 class MenuItem extends StatelessWidget {
@@ -62,6 +66,37 @@ class CustomMenuClipper extends CustomClipper<Path> {
     return true;
   }
 
+}
+
+//Navigation Environment
+enum NavigationEvents {
+  HomePageClicked,
+  ZeitplanungClicked,
+  ZeiterfassungClicked,
+  InfoClicked,
+}
+abstract class NavigationStates {}
+class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
+  @override
+  NavigationStates get initialState => Home();
+
+  @override
+  Stream<NavigationStates> mapEventToState(NavigationEvents event) async* {
+    switch (event) {
+      case NavigationEvents.HomePageClicked:
+        yield Home();
+        break;
+      case NavigationEvents.ZeitplanungClicked:
+        yield Zeitplanung();
+        break;
+      case NavigationEvents.ZeiterfassungClicked:
+        yield Zeiterfassung();
+        break;
+      case NavigationEvents.InfoClicked:
+        yield Info();
+        break;
+    }
+  }
 }
 
 //Displaying Classes
@@ -265,4 +300,3 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
     );
   }
 }
-

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studybuddy/bloc/navigation_bloc/navigation_bloc.dart';
-//import '../bloc.navigation_bloc/navigation_bloc.dart';
+import '../sidebar/sidebar.dart';//no idea why this has to be imported, but it works...
 
 class Zeiterfassung extends StatelessWidget with NavigationStates {
   @override
