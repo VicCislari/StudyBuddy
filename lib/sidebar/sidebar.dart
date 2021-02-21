@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:studybuddy/bloc/navigation_bloc/navigation_bloc.dart';
-//import '../bloc.navigation_bloc/navigation_bloc.dart';
 import '../sidebar/menu_item.dart';
+
+import 'package:studybuddy/pages/home.dart';
+import 'package:studybuddy/pages/zeitplanung.dart';
+import 'package:studybuddy/pages/zeiterfassung.dart';
+import 'package:studybuddy/pages/info.dart';
 
 class SideBar extends StatefulWidget {
   @override
@@ -52,6 +56,10 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
+    Color fontColor= Colors.black;
+    Color bgColor= Colors.red[900];
+    Color iconColor = Colors.grey[500];
+
     return StreamBuilder<bool>(
       initialData: false,
       stream: isSidebarOpenedStream,
@@ -68,7 +76,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    color: const Color(0xFF262AAA),
+                    color: bgColor,
                     child: Column(
                       children: <Widget>[
                         /*SizedBox(
@@ -107,6 +115,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         MenuItem(
                           icon: Icons.home,
                           title: "Home",
+                          //color: iconColor,
                           onTap: () {
                             onIconPressed();
                             BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClicked);
@@ -130,12 +139,29 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         ),//Zeiterfassung
                         MenuItem(
                           icon: Icons.shopping_basket,
-                          title: "Info",
+                          title: 'Info',
                           onTap: () {
                             onIconPressed();
                             BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.InfoClicked);
                           },
                         ),//Info
+                       /*
+                        Card(
+                          color:bgColor,
+                          elevation: 0.0,
+                          child: ListTile(
+                            onTap: (){
+                              onIconPressed();
+                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.InfoClicked);
+                            },
+                            title:Text(
+                                'Info',
+                                TextStyle(fontweight:FontWeight.bold),
+                            ),
+                            leading: Icon(Icons.shopping_basket),
+                            ),
+                          ),
+                          */
                         Divider(
                           height: 200,
                           thickness: 0.5,
@@ -166,12 +192,12 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                       child: Container(
                         width: 35,
                         height: 110,
-                        color: Color(0xFF262AAA),
+                        color: Colors.red[900],
                         alignment: Alignment.centerLeft,
                         child: AnimatedIcon(
                           progress: _animationController.view,
                           icon: AnimatedIcons.menu_close,
-                          color: Color(0xFF1BB5FD),
+                          color: Colors.black,
                           size: 25,
                         ),
                       ),
@@ -191,7 +217,7 @@ class CustomMenuClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Paint paint = Paint();
-    paint.color = Colors.white;
+    paint.color = Colors.black;
 
     final width = size.width;
     final height = size.height;

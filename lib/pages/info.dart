@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-//import '../bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:studybuddy/bloc/navigation_bloc/navigation_bloc.dart';
 
-class Info extends StatelessWidget with NavigationStates {
+class Info extends StatefulWidget with NavigationStates {
   @override
+  _InfoState createState() => _InfoState();
+}
 
+class _InfoState extends State<Info> {
+  int ninjalevel=0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
@@ -31,7 +36,7 @@ class Info extends StatelessWidget with NavigationStates {
             Center(
               child: CircleAvatar(
                 radius:40.0,
-                backgroundImage:AssetImage('assets/image.jfif'),
+                //backgroundImage:AssetImage('assets/image.jfif'),
               ),
             ),
             Divider(
