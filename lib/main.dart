@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'sidebar/sidebar.dart';
+import 'sidebar.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
                   return navigationState as Widget;
                 },
               ),
-              SideBar(),// has to come after the BlocBuilder bcause otherwise the blocBuilders Text overlaps with the open Sidebar. Don't why, just tested it.
+              SideBar(),// has to come after the BlocBuilder because otherwise the blocBuilders Text overlaps with the open Sidebar. Don't why, just tested it.
             ],
           ),
         ),

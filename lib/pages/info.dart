@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../sidebar/sidebar.dart';//no idea why this has to be imported, but it works...
+import '../sidebar.dart';//no idea why this has to be imported, but it works...
 
 class Info extends StatefulWidget with NavigationStates {
   @override

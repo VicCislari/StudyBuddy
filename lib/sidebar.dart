@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:bloc/bloc.dart';
-import '../pages/home.dart';
-import '../pages/zeitplanung.dart';
-import '../pages/zeiterfassung.dart';
-import '../pages/info.dart';
+import 'pages/home.dart';
+import 'pages/zeitplanung.dart';
+import 'pages/zeiterfassung.dart';
+import 'pages/info.dart';
 
 //Helper classes
 class MenuItem extends StatelessWidget {
