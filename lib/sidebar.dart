@@ -1,3 +1,8 @@
+/*Tasksk:
+* 1. make the menutitem in which the user is located stick out
+*  -> approach 1: try using Streamreader between _SideBarState and NavigationBloc (Victor)
+* */
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -128,6 +133,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   Stream<bool> isSidebarOpenedStream;
   StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 400);
+
   Map<String, MenuItem> menuItems;
   String currentPage='Home';// initial Page
 
