@@ -4,6 +4,7 @@ import '../sidebar.dart';//no idea why this has to be imported, but it works...
 class Log extends StatelessWidget with NavigationStates {
   @override
   Widget build(BuildContext context) {
+    //Data.getNumber();
     return Center(
       child: Text(
         "Log In",

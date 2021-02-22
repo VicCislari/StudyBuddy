@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'sidebar.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  //Data data=Data(number:2345);
+  //Data.number=124;
+  return runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Data.getNumber();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           primaryColor: Colors.white
       ),
-      home: AppLayout(),/*Scaffold(//AppLayout
+      home: AppLayout(),
+      /*Scaffold(//AppLayout
         body: BlocProvider<NavigationBloc>(
           create: (context) => NavigationBloc(),
           child: Stack(
